@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\abren\\.nuget\\packages\\": {}
+    "C:\\Users\\dopekids\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\abren\\OneDrive\\Área de Trabalho\\CSE325\\GroceryApp\\GroceryApp.csproj",
+      "projectUniqueName": "C:\\Users\\dopekids\\Desktop\\BYU-Idaho\\Term 1 - 2026\\CSE325\\GroceryApp\\GroceryApp\\GroceryApp.csproj",
       "projectName": "GroceryApp",
-      "projectPath": "C:\\Users\\abren\\OneDrive\\Área de Trabalho\\CSE325\\GroceryApp\\GroceryApp.csproj",
-      "packagesPath": "C:\\Users\\abren\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\abren\\OneDrive\\Área de Trabalho\\CSE325\\GroceryApp\\obj\\",
+      "projectPath": "C:\\Users\\dopekids\\Desktop\\BYU-Idaho\\Term 1 - 2026\\CSE325\\GroceryApp\\GroceryApp\\GroceryApp.csproj",
+      "packagesPath": "C:\\Users\\dopekids\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\dopekids\\Desktop\\BYU-Idaho\\Term 1 - 2026\\CSE325\\GroceryApp\\GroceryApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\abren\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\dopekids\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
