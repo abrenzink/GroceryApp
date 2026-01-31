@@ -53,3 +53,8 @@ Navigation
 • Active link: Slightly darker green: #43A047
 
 Suggest line hights of 1.5
+
+<img src = "images/homewireframe.png">
+<img src = "images/cartwireframe.png">
+<img src = "images/shopwireframe.png">
+<img src = "images/profilewireframe.png">
