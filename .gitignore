@@ -5,3 +5,9 @@
 *.userosscache
 *.sln.docstates
 *.suo
+
+# Local settings
+appsettings.Development.json
+appsettings.Local.json
+
+
