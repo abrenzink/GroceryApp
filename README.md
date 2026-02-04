@@ -1,5 +1,33 @@
 # GroceryApp
 
+A simple Grocery App: Design Guide and UI Documentation.
+
+## Overview
+GroceryApp is a grocery shopping application designed to provide a clean and intuitive user experience.  
+Users can browse products, add items to the cart, and complete their purchase.  
+Admins can manage inventory and view orders.
+
+## User Guide
+1. **Sign Up / Login:** Create an account or login to access the app.  
+2. **Browse Products:** Navigate the shop to view available groceries.  
+3. **Add to Cart:** Click "Add" on items you want to purchase.  
+4. **View Cart:** Review items in your cart and update quantities if needed.  
+5. **Checkout:** Enter shipping information and complete payment.  
+6. **Profile:** View past orders and account details.
+
+## Admin Guide
+1. **Login as Admin:** Use admin credentials to access the admin panel.  
+2. **Manage Products:** Add, update, or delete grocery items.  
+3. **View Orders:** See all user orders and their statuses.  
+4. **Manage Users:** Optionally view and manage user accounts.  
+5. **Dashboard:** Monitor app activity and inventory levels.
+
+
+**This is a first idea, that will update with the project's update**
+
+
+
+
 Grocery App: Design Guide
 Color Palette
 Role Color Hex Usage
