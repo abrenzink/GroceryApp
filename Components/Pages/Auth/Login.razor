@@ -1,0 +1,43 @@
+@page "/login"
+@using System.ComponentModel.DataAnnotations
+
+
+<h3>Login</h3>
+
+<EditForm Model="@model" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Email</label>
+        <InputText class="form-control" @bind-Value="model.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label>Password</label>
+        <InputText class="form-control" @bind-Value="model.Password" type="password" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">
+        Login
+    </button>
+</EditForm>
+
+@code {
+    private LoginModel model = new();
+
+    private void OnSubmit()
+    {
+        // Temporary: logic will be added later
+    }
+
+    private class LoginModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        public string Password { get; set; } = string.Empty;
+    }
+}
