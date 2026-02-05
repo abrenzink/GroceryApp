@@ -1,7 +1,11 @@
 using GroceryApp.Components;
-using GroceryApp.Data;
+
+
+//Includes needed for Database
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
+//using EFCore.NamingConventions;
+using Data;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,15 +20,20 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/login";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-    });
-builder.Services.AddAuthorization();
-builder.Services.AddHttpContextAccessor();
+
+
+// Connection to CSE325 database PostgreSQL
+var connectionString = builder.Configuration.GetConnectionString("AivenPostgres");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("AivenPostgres"));
+
+    options.UseSnakeCaseNamingConvention();
+});
+
+
+builder.Services.AddScoped<GroceryService>();
 
 var app = builder.Build();
 
