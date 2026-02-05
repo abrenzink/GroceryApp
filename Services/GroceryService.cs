@@ -16,9 +16,30 @@ public class GroceryService
   // Obtain all products avaliables
   public async Task<List<GroceryItem>> GetAvailableProductsAsync()
   {
-    return await _context.GroceryItems
-        .Where(item => item.IsAvailable)
-        .ToListAsync();
+   
+        try
+        {
+            Console.WriteLine("=== Consultando productos disponibles ===");
+            
+            var allItems = await _context.GroceryItems.ToListAsync();
+            Console.WriteLine($"Total de productos en DB: {allItems.Count}");
+            
+            var availableItems = allItems.Where(item => item.IsAvailable).ToList();
+            Console.WriteLine($"Productos disponibles: {availableItems.Count}");
+            
+            foreach (var item in availableItems)
+            {
+                Console.WriteLine($"- {item.Name} (ID: {item.Id}, Disponible: {item.IsAvailable})");
+            }
+            
+            return availableItems;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ERROR en GetAvailableProductsAsync: {ex.Message}");
+            Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+            throw;
+        }
   }
 
 

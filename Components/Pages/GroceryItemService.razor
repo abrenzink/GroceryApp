@@ -6,48 +6,76 @@
 
 <h3>Productos Disponibles</h3>
 
-@if (products == null)
+@if (isLoading)
 {
-  <p>Cargando productos...</p>
+    <p><em>Cargando productos...</em></p>
 }
-else if (products.Any())
+else if (errorMessage != null)
 {
-  <div class="row">
-    @foreach (var product in products)
-    {
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height:200px; object-fit:cover;">
-          <div class="card-body">
-            <h5 class="card-title">@product.Name</h5>
-            <p class="card-text">@product.Description</p>
-            <p><strong>Precio:</strong> $@product.Price</p>
-            <p><strong>Categoría:</strong> @product.Category</p>
-            <p><strong>Stock:</strong> @product.Stock unidades</p>
-          </div>
-        </div>
-      </div>
-    }
-  </div>
+    <div class="alert alert-danger" role="alert">
+        <strong>Error:</strong> @errorMessage
+    </div>
+}
+else if (products == null || !products.Any())
+{
+    <div class="alert alert-warning" role="alert">
+        No hay productos disponibles en este momento.
+    </div>
 }
 else
 {
-  <p>No hay productos disponibles.</p>
+    <p>Se encontraron @products.Count productos</p>
+    <div class="row">
+        @foreach (var product in products)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height:200px; object-fit:cover;">
+                    }
+                    else
+                    {
+                        <div style="height:200px; background-color:#ccc; display:flex; align-items:center; justify-content:center;">
+                            <span>Sin imagen</span>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.Description</p>
+                        <p><strong>Precio:</strong> $@product.Price.ToString("F2")</p>
+                        <p><strong>Categoría:</strong> @product.Category</p>
+                        <p><strong>Stock:</strong> @product.Stock unidades</p>
+                        <p><small>ID: @product.Id | Disponible: @product.IsAvailable</small></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }
 
 @code {
-  private List<GroceryItem>? products;
+    private List<GroceryItem>? products;
+    private bool isLoading = true;
+    private string? errorMessage;
 
-  protected override async Task OnInitializedAsync()
-  {
-    try
+    protected override async Task OnInitializedAsync()
     {
-      products = await GroceryService.GetAvailableProductsAsync();
+        try
+        {
+            Console.WriteLine("=== Componente: Cargando productos ===");
+            products = await GroceryService.GetAvailableProductsAsync();
+            Console.WriteLine($"=== Componente: Productos cargados: {products?.Count ?? 0} ===");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+            Console.WriteLine($"=== Componente: Error - {ex.Message} ===");
+            Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
-    catch (Exception ex)
-    {
-      Console.WriteLine($"Error al cargar productos: {ex.Message}");
-      // Puedes mostrar un mensaje de error al usuario aquí
-    }
-  }
 }
