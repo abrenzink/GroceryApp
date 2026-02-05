@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Data;
-using Models;
+using GroceryApp.Data;
+using GroceryApp.Models;
 
-namespace Services;
+namespace GroceryApp.Services;
 
 public class GroceryService
 {

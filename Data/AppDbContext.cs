@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using EFCore.NamingConventions;
-using Models;
+using GroceryApp.Models;
 
-namespace Data;
+namespace GroceryApp.Data;
 
 public class AppDbContext : DbContext
 {
