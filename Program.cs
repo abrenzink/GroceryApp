@@ -6,20 +6,13 @@ using Microsoft.EntityFrameworkCore;
 //using EFCore.NamingConventions;
 using GroceryApp.Data;
 using GroceryApp.Services;
-using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Database
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("PostgresLocal")
-    )
-);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
 
 
 // Connection to CSE325 database PostgreSQL
@@ -32,9 +25,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSnakeCaseNamingConvention();
 });
 
-builder.Services.AddHttpClient();
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
+
 builder.Services.AddScoped<GroceryService>();
 builder.Services.AddScoped<CartState>();
 
@@ -44,27 +35,16 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
-app.UseAuthentication();
-app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
-app.MapGet("/test-users", async (AppDbContext db) =>
-{
-    return await db.Users.ToListAsync();
-});
-
-app.MapPost("/logout", async (HttpContext context) =>
-{
-    await context.SignOutAsync(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
-    return Results.Redirect("/login");
-});
 
 app.Run();

@@ -6,31 +6,25 @@
 
 <PageTitle>Cart</PageTitle>
 
-<AuthorizeView>
-    <Authorized>
-        @if (cart.Items.Any()) {
+@if (cart.Items.Any()) {
+    <div>
+        <h2>Your Cart</h2>
+        @foreach (var cartItem in cart.Items) {
             <div>
-                <h2>Your Cart</h2>
-                @foreach (var cartItem in cart.Items) {
-                    <div>
-                        <img src="@cartItem.GroceryItem.ImageUrl">
-                    </div>
-                    <div>
-                        <div>@(cartItem.GroceryItem.Name)</div>
-                        <div>@(cartItem.Quantity)</div>
-                    </div>
-                    <div>@cartItem.GroceryItem.Price</div>
-                    <div>@cartItem.GetSubtotalFormatted()</div>
-                }
-                <div>@cart.GetFormattedTotalPrice()</div>
+                <img src="@cartItem.GroceryItem.ImageUrl">
             </div>
+            <div>
+                <div>@(cartItem.GroceryItem.Name)</div>
+                <div>@(cartItem.Quantity)</div>
+            </div>
+            <div>@cartItem.GroceryItem.Price</div>
+            <div>@cartItem.GetSubtotalFormatted()</div>
         }
-    </Authorized>
-    <NotAuthorized>
-        <h3>Welcome!</h3>
-        <p>You're logged out. <a href="login">Click here to login</a>.</p>
-    </NotAuthorized>
-</AuthorizeView>
+        <div>@cart.GetFormattedTotalPrice()</div>
+    </div>
+} else {
+    <div class="empty-cart">Choose an item<br>to get started</div>
+}
 
 @code {
     ShoppingCart cart => CartState.Cart;
