@@ -6,23 +6,23 @@ public static class DbInitializer
 {
     public static void Initialize(AppDbContext context)
     {
-        Console.WriteLine("=== Inicializando Base de Datos ===");
-        
-        // Asegúrate de que la BD existe
-        context.Database.EnsureCreated();
-        Console.WriteLine("Base de datos creada/verificada");
+        Console.WriteLine("=== Initializing Database ===");
 
-        // Si ya hay usuarios, no hacer nada
+        // Ensure the DB exists
+        context.Database.EnsureCreated();
+        Console.WriteLine("Database created/verified");
+
+        // If users exist, do nothing
         if (context.Users.Any())
         {
-            Console.WriteLine($"La base de datos ya tiene {context.Users.Count()} usuarios");
-            Console.WriteLine($"La base de datos ya tiene {context.GroceryItems.Count()} productos");
+            Console.WriteLine($"The database already has {context.Users.Count()} users");
+            Console.WriteLine($"The database already has {context.GroceryItems.Count()} products");
             return;
         }
 
-        Console.WriteLine("Insertando datos iniciales...");
+        Console.WriteLine("Inserting initial data...");
 
-        // Agregar usuarios
+        // Add users
         var users = new User[]
         {
             new User
@@ -56,9 +56,9 @@ public static class DbInitializer
 
         context.Users.AddRange(users);
         context.SaveChanges();
-        Console.WriteLine($"Insertados {users.Length} usuarios");
+        Console.WriteLine($"Inserted {users.Length} users");
 
-        // Agregar productos
+        // Add products
         var groceryItems = new GroceryItem[]
         {
             new GroceryItem
@@ -130,7 +130,7 @@ public static class DbInitializer
 
         context.GroceryItems.AddRange(groceryItems);
         context.SaveChanges();
-        Console.WriteLine($"Insertados {groceryItems.Length} productos");
-        Console.WriteLine("=== Base de Datos Inicializada ===");
+        Console.WriteLine($"Inserted {groceryItems.Length} products");
+        Console.WriteLine("=== Database Initialized ===");
     }
 }

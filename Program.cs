@@ -1,27 +1,24 @@
 using GroceryApp.Components;
-using GroceryApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
-
-
-//Includes needed for Database
-using Microsoft.EntityFrameworkCore;
-//using EFCore.NamingConventions;
 using Data;
-using Services;
+using GroceryApp.Services;
+using EFCore.NamingConventions;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Database
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("PostgresLocal")
-    )
-);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/login";
+        options.AccessDeniedPath = "/access-denied";
+    });
+
+builder.Services.AddCascadingAuthenticationState();
 
 
 
@@ -39,7 +36,7 @@ var app = builder.Build();
 // ========================================
 // CREATE A DATABASE IF NOT EXIST
 // ========================================
-Console.WriteLine("=== INICIANDO CONFIGURACIÓN DE BASE DE DATOS ===");
+Console.WriteLine("=== STARTING DATABASE CONFIGURATION ===");
 
 using (var scope = app.Services.CreateScope())
 {
@@ -48,22 +45,22 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<AppDbContext>();
 
-        Console.WriteLine("Creando base de datos...");
+        Console.WriteLine("Creating database...");
         // Crear la base de datos si no existe
         context.Database.EnsureCreated();
-        Console.WriteLine("Base de datos creada/verificada");
+        Console.WriteLine("Database created/verified");
 
         // Inicializar datos
         DbInitializer.Initialize(context);
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"ERROR al crear la base de datos: {ex.Message}");
+        Console.WriteLine($"ERROR creating database: {ex.Message}");
         Console.WriteLine($"Stack Trace: {ex.StackTrace}");
     }
 }
 
-Console.WriteLine("=== CONFIGURACIÓN DE BASE DE DATOS COMPLETADA ===");
+Console.WriteLine("=== DATABASE CONFIGURATION COMPLETED ===");
 // ========================================
 
 // Configure the HTTP request pipeline.
@@ -92,5 +89,7 @@ app.MapPost("/logout", async (HttpContext context) =>
     await context.SignOutAsync(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
     return Results.Redirect("/login");
 });
+
+
 
 app.Run();

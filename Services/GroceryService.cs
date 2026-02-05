@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Data;
 using Models;
 
-namespace Services;
+namespace GroceryApp.Services;
 
 public class GroceryService
 {
@@ -13,33 +13,33 @@ public class GroceryService
     _context = context;
   }
 
-  // Obtain all products avaliables
+  // Get all available products
   public async Task<List<GroceryItem>> GetAvailableProductsAsync()
   {
-   
-        try
-        {
-            Console.WriteLine("=== Consultando productos disponibles ===");
-            
-            var allItems = await _context.GroceryItems.ToListAsync();
-            Console.WriteLine($"Total de productos en DB: {allItems.Count}");
-            
-            var availableItems = allItems.Where(item => item.IsAvailable).ToList();
-            Console.WriteLine($"Productos disponibles: {availableItems.Count}");
-            
-            foreach (var item in availableItems)
-            {
-                Console.WriteLine($"- {item.Name} (ID: {item.Id}, Disponible: {item.IsAvailable})");
-            }
-            
-            return availableItems;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"ERROR en GetAvailableProductsAsync: {ex.Message}");
-            Console.WriteLine($"Stack Trace: {ex.StackTrace}");
-            throw;
-        }
+
+    try
+    {
+      Console.WriteLine("=== Querying available products ===");
+
+      var allItems = await _context.GroceryItems.ToListAsync();
+      Console.WriteLine($"Total products in DB: {allItems.Count}");
+
+      var availableItems = allItems.Where(item => item.IsAvailable).ToList();
+      Console.WriteLine($"Available products: {availableItems.Count}");
+
+      foreach (var item in availableItems)
+      {
+        Console.WriteLine($"- {item.Name} (ID: {item.Id}, Available: {item.IsAvailable})");
+      }
+
+      return availableItems;
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"ERROR in GetAvailableProductsAsync: {ex.Message}");
+      Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+      throw;
+    }
   }
 
 
