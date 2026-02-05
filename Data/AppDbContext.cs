@@ -1,27 +1,46 @@
-namespace GroceryApp.Data;
-
 using Microsoft.EntityFrameworkCore;
-using GroceryApp.Models;
+using EFCore.NamingConventions;
+using Models;
+
+namespace Data;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+    // DbSets for the main entities
+    public DbSet<User> Users { get; set; }
+    public DbSet<GroceryItem> GroceryItems { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+
+        optionsBuilder.UseSnakeCaseNamingConvention();
     }
-
-    public DbSet<User> Users => Set<User>();
-    // public DbSet<GroceryItem> GroceryItems => Set<GroceryItem>();
-    // public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
-    // public DbSet<CartItem> CartItems => Set<CartItem>();
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>().ToTable("users");
-        // modelBuilder.Entity<GroceryItem>().ToTable("grocery_items");
-        // modelBuilder.Entity<ShoppingCart>().ToTable("shopping_carts");
-        // modelBuilder.Entity<CartItem>().ToTable("cart_items");
+
+
+        // Optional: if you want singular table names (not needed here, your tables are plural)
+        // modelBuilder.UseSingularTableNames(false);
+
+        // Optional: configure relationships explicitly if needed
+        modelBuilder.Entity<ShoppingCart>()
+            .HasOne(sc => sc.User)
+            .WithMany()
+            .HasForeignKey(sc => sc.UserId);
+
+        modelBuilder.Entity<CartItem>()
+            .HasOne(ci => ci.GroceryItem)
+            .WithMany()
+            .HasForeignKey(ci => ci.GroceryItemId);
+
+
+        modelBuilder.Entity<GroceryItem>().ToTable("grocery_items");
     }
+
 }
