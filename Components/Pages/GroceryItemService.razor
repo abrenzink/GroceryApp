@@ -1,0 +1,82 @@
+@page "/groceryitemservice"
+@using Data
+@using Models
+@using GroceryApp.Services
+@inject GroceryService GroceryService
+
+<h3>Available Products</h3>
+
+@if (isLoading)
+{
+        <p><em>Loading products...</em></p>
+}
+else if (errorMessage != null)
+{
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> @errorMessage
+        </div>
+}
+else if (products == null || !products.Any())
+{
+        <div class="alert alert-warning" role="alert">
+            No products available at the moment.
+        </div>
+}
+else
+{
+        <p>Found @products.Count products</p>
+        <div class="row">
+        @foreach (var product in products)
+        {
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name"
+                                        style="height:200px; object-fit:cover;">
+                    }
+                    else
+                    {
+                                    <div style="height:200px; background-color:#ccc; display:flex; align-items:center; justify-content:center;">
+                                        <span>No image</span>
+                                    </div>
+                    }
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Name</h5>
+                                <p class="card-text">@product.Description</p>
+                                <p><strong>Price:</strong> $@product.Price.ToString("F2")</p>
+                                <p><strong>Category:</strong> @product.Category</p>
+                                <p><strong>Stock:</strong> @product.Stock units</p>
+                                <p><small>ID: @product.Id | Available: @product.IsAvailable</small></p>
+                            </div>
+                        </div>
+                    </div>
+        }
+        </div>
+}
+
+@code {
+    private List<GroceryItem>? products;
+    private bool isLoading = true;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Console.WriteLine("=== Component: Loading products ===");
+            products = await GroceryService.GetAvailableProductsAsync();
+            Console.WriteLine($"=== Component: Products loaded: {products?.Count ?? 0} ===");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+            Console.WriteLine($"=== Component: Error - {ex.Message} ===");
+            Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
