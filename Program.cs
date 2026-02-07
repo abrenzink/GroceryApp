@@ -1,7 +1,7 @@
 using GroceryApp.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
-using Data;
+using GroceryApp.Data;
 using GroceryApp.Services;
 using EFCore.NamingConventions;
 
