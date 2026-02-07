@@ -11,5 +11,3 @@ appsettings.Development.json
 appsettings.Local.json
 
 grocery.db
-
-schema.sql
