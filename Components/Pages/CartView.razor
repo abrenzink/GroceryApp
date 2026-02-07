@@ -1,0 +1,34 @@
+@using GroceryApp.Services
+@using Models
+@inject CartState CartService
+
+@if (MyCart.Items.Any()) {
+    <div>
+        <button @onclick="@(() => CartService.closeCart())">Close</button>
+        <h2>Your Cart</h2>
+        @foreach (var cartItem in MyCart.Items) {
+            <div class="card-body">
+                <div>
+                    <img src="@cartItem.GroceryItem.ImageUrl" style="height:200px; object-fit:cover;">
+                </div>
+                <div>
+                    <div class="card-title">Name: @(cartItem.GroceryItem.Name)</div>
+                    <div>Quantity: @(cartItem.Quantity)</div>
+                </div>
+                <div>Unit Price: @cartItem.GroceryItem.Price</div>
+                <div>SubTotal Price: @cartItem.GetSubtotalFormatted()</div>
+                <Button @onclick="@(() => CartService.decrementQuantity(cartItem.GroceryItem))">-</Button>
+                <Button @onclick="@(() => CartService.incrementQuantity(cartItem.GroceryItem))">+</Button>
+                <Button @onclick="@(() => CartService.deleteFromCart(cartItem))">Delete</Button>
+            </div>
+        }
+        <div>Cart Total @MyCart.GetFormattedTotalPrice()</div>
+    </div>
+} else {
+    <div class="empty-cart">Choose an item<br>to get started</div>
+}
+
+@code {
+    [Parameter]
+    public ShoppingCart? MyCart { get; set; } = null;
+}

@@ -1,4 +1,5 @@
 namespace GroceryApp.Models;
+using System.Linq;
 
 public class CartItem
 {
