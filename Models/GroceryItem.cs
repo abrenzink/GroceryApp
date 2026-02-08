@@ -1,4 +1,6 @@
 namespace GroceryApp.Models;
+
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 public class GroceryItem
@@ -14,4 +16,7 @@ public class GroceryItem
   public int AdminId { get; set; }
   public DateTime CreatedAt { get; set; }
   public DateTime UpdatedAt { get; set; }
+
+  [ForeignKey("AdminId")]
+  public User? Admin { get; set; }
 }

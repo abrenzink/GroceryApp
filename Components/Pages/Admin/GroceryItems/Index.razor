@@ -1,0 +1,156 @@
+@page "/admin/grocery-items"
+@rendermode InteractiveServer
+
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+@using GroceryApp.Models
+@using GroceryApp.Services
+@inject IGroceryItemService GroceryItemService
+@inject NavigationManager Navigation
+
+<div class="admin-page">
+  <PageTitle>Grocery Items Management</PageTitle>
+
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1><i class="bi bi-box-seam"></i> Grocery Items</h1>
+      <NavLink href="/admin/grocery-items/create" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Create New Item
+      </NavLink>
+
+    </div>
+
+    @if (groceryItems == null)
+    {
+      <p><em>Loading...</em></p>
+    }
+    else if (!groceryItems.Any())
+    {
+      <div class="card">
+        <div class="card-body text-center">
+          <i class="bi bi-inbox" style="font-size: 48px; color: var(--text-secondary);"></i>
+          <p class="mt-3 text-secondary-custom">No grocery items found. Create your first item!</p>
+          <button class="btn btn-primary mt-2" @onclick="NavigateToCreate">
+            <i class="bi bi-plus-circle"></i> Create Item
+          </button>
+        </div>
+      </div>
+    }
+    else
+    {
+      <div class="card">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0">
+              <thead class="table-dark">
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Status</th>
+                  <th>Created By</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var item in groceryItems)
+                {
+                  <tr>
+                    <td>
+                      @if (!string.IsNullOrEmpty(item.ImageUrl))
+                      {
+                        <img src="@item.ImageUrl" alt="@item.Name" class="product-image">
+                      }
+                      else
+                      {
+                        <div class="product-image-placeholder">
+                          <i class="bi bi-image text-secondary"></i>
+                        </div>
+                      }
+                    </td>
+                    <td class="align-middle"><strong>@item.Name</strong></td>
+                    <td class="align-middle">
+                      <span class="badge bg-info">@item.Category</span>
+                    </td>
+                    <td class="align-middle"><strong>$@item.Price.ToString("F2")</strong></td>
+                    <td class="align-middle">
+                      @if (item.Stock > 10)
+                      {
+                        <span class="badge bg-success">@item.Stock</span>
+                      }
+                      else if (item.Stock > 0)
+                      {
+                        <span class="badge bg-warning">@item.Stock</span>
+                      }
+                      else
+                      {
+                        <span class="badge bg-danger">Out of Stock</span>
+                      }
+                    </td>
+                    <td class="align-middle">
+                      @if (item.IsAvailable)
+                      {
+                        <span class="badge bg-success">
+                          <i class="bi bi-check-circle"></i> Active
+                        </span>
+                      }
+                      else
+                      {
+                        <span class="badge bg-warning">
+                          <i class="bi bi-pause-circle"></i> Inactive
+                        </span>
+                      }
+                    </td>
+                    <td class="align-middle">@item.Admin?.Name</td>
+                    <td class="align-middle">
+                      <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-warning" @onclick="() => NavigateToEdit(item.Id)">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => NavigateToDelete(item.Id)">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <p class="text-secondary-custom">
+          <i class="bi bi-info-circle"></i>
+          Total items: <strong>@groceryItems.Count</strong>
+        </p>
+      </div>
+    }
+  </div>
+</div>
+@code {
+  private List<GroceryItem>? groceryItems;
+
+  protected override async Task OnInitializedAsync()
+  {
+    groceryItems = await GroceryItemService.GetAllAsync();
+  }
+
+  private void NavigateToCreate()
+  {
+    Navigation.NavigateTo("/admin/grocery-items/create");
+  }
+
+  private void NavigateToEdit(int id)
+  {
+    Navigation.NavigateTo($"/admin/grocery-items/edit/{id}");
+  }
+
+  private void NavigateToDelete(int id)
+  {
+    Navigation.NavigateTo($"/admin/grocery-items/delete/{id}");
+  }
+}
