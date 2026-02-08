@@ -1,4 +1,5 @@
-namespace Models;
+namespace GroceryApp.Models;
+using System.Linq;
 
 public class GroceryItem
 {

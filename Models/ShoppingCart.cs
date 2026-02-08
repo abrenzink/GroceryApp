@@ -1,4 +1,5 @@
-namespace Models;
+namespace GroceryApp.Models;
+using System.Linq;
 
 public class ShoppingCart
 {
@@ -12,4 +13,6 @@ public class ShoppingCart
   // Navigation properties (optional but useful)
   public User? User { get; set; }
   public List<CartItem> Items { get; set; } = new();
+  public decimal GetTotalPrice() => Items.Sum(i => i.GetSubtotal());
+  public string GetFormattedTotalPrice() => GetTotalPrice().ToString("0.00");
 }

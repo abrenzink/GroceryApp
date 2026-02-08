@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Data;
-using Models;
+using GroceryApp.Data;
+using GroceryApp.Models;
 
 namespace GroceryApp.Services;
 

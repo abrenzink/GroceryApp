@@ -1,7 +1,7 @@
 using GroceryApp.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
-using Data;
+using GroceryApp.Data;
 using GroceryApp.Services;
 using EFCore.NamingConventions;
 
@@ -30,6 +30,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddScoped<GroceryService>();
+builder.Services.AddScoped<CartState>();
 
 var app = builder.Build();
 
@@ -67,13 +68,13 @@ Console.WriteLine("=== DATABASE CONFIGURATION COMPLETED ===");
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
-app.UseAuthentication();
-app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()

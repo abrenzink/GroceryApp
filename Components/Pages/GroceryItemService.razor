@@ -1,10 +1,21 @@
 @page "/groceryitemservice"
 @using Data
 @using Models
-@using GroceryApp.Services
+@using Services
+@using Microsoft.AspNetCore.Components.Authorization
 @inject GroceryService GroceryService
+@inject CartState CartService
+@rendermode InteractiveServer
 
 <h3>Available Products</h3>
+
+@if (CartService.showCart) {
+    <div class="cart-overlay">
+        <CartView MyCart="Cart" />
+    </div>
+} else {
+    <button @onclick="@(() => CartService.openCart())">Open</button>
+}
 
 @if (isLoading)
 {
@@ -49,21 +60,40 @@ else
                                 <p><strong>Stock:</strong> @product.Stock units</p>
                                 <p><small>ID: @product.Id | Available: @product.IsAvailable</small></p>
                             </div>
+                            @if (!CartService.isInCart(product)) {
+                                <button @onclick="@(() => CartService.addToCart(product))">
+                                    Add to Cart
+                                </button>
+                            }
+                            else
+                            {
+                                <button @onclick="@(() => CartService.incrementQuantity(product))">
+                                    Add One More To Cart
+                                </button>
+                            }
                         </div>
                     </div>
         }
         </div>
 }
 
+@implements IDisposable
 @code {
     private List<GroceryItem>? products;
     private bool isLoading = true;
     private string? errorMessage;
+    ShoppingCart Cart => CartService.Cart;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
+            // Subscribe to cart changes so the UI updates when items are added
+            CartService.OnChange += StateHasChanged;
+            
+            // Initialize cart with user context
+            await CartService.InitializeAsync();
+
             Console.WriteLine("=== Component: Loading products ===");
             products = await GroceryService.GetAvailableProductsAsync();
             Console.WriteLine($"=== Component: Products loaded: {products?.Count ?? 0} ===");
@@ -78,5 +108,10 @@ else
         {
             isLoading = false;
         }
+    }
+
+    public void Dispose()
+    {
+        CartService.OnChange -= StateHasChanged;
     }
 }
