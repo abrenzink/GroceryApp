@@ -102,7 +102,15 @@ new Claim("UserId", user.Id.ToString())
             // Navigation will be handled by RedirectUri in authProperties or manual nav if needed,
             // but SignInAsync typically handles the response.
             // However, explicit navigation ensures we go where we want.
-            Navigation.NavigateTo("/home", true);
+            try
+                {
+                        Navigation.NavigateTo("/");
+                }
+                        catch (NavigationException)
+                {
+                    // do nothing
+                }
+
         }
         else
         {
