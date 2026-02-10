@@ -1,0 +1,92 @@
+@page "/checkout"
+@rendermode InteractiveServer
+@using GroceryApp.Services
+@using Microsoft.AspNetCore.Components.Routing
+@using Models
+@inject NavigationManager NavigationManager
+@inject CartState CartService
+
+<PageTitle>Checkout</PageTitle>
+
+<h1>Checkout</h1>
+
+@if (Cart.Items.Count == 0)
+{
+    <p>No cart items to checkout.</p>
+}
+else
+{
+    <h2>Order Summary</h2>
+    <table class="checkout-table">
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+        @foreach (var item in Cart.Items)
+        {
+            <tr>
+                <td>@item.GroceryItem.Name</td>
+                <td>$@item.GroceryItem.Price</td>
+                <td>@item.Quantity</td>
+                <td>$@item.GetSubtotalFormatted()</td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td><strong>Total:</strong></td>
+            <td><strong>$@Cart.GetFormattedTotalPrice()</strong></td>
+        </tr>
+    </table>
+    <h2>Delivery Address</h2>
+    <EditForm Model="DeliveryAddress" OnValidSubmit="HandleBuyNow">
+        <DataAnnotationsValidator />
+
+        <div class="form-group">
+            <label for="street">Address Line 1*:</label>
+            <ValidationMessage For="@(() => DeliveryAddress.AddressLine1)" />
+            <InputText id="street" class="form-control" @bind-Value="DeliveryAddress.AddressLine1" />
+        </div>
+
+        <div class="form-group">
+            <label for="city">Address Line 2:</label>
+            <InputText id="city" class="form-control" @bind-Value="DeliveryAddress.AddressLine2" />
+        </div>
+
+        <div class="form-group">
+            <label for="zip">Postal Code*:</label>
+            <ValidationMessage For="@(() => DeliveryAddress.PostalCode)" />
+            <InputText id="zip" class="form-control" @bind-Value="DeliveryAddress.PostalCode" />
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-secondary" @onclick="@HandleReturn">Return</button>
+            <input type="submit" value="Buy Now" class="btn btn-success" />
+        </div>
+
+    </EditForm>
+}
+
+@code {
+    ShoppingCart Cart;
+    DeliveryAddress DeliveryAddress = new DeliveryAddress();
+    protected override void OnInitialized()
+    {
+        Cart = CartService.Cart;
+    }
+
+    void HandleBuyNow()
+    {
+        // Process purchase, clear cart, back to home page
+        CartService.resetCart();
+        NavigationManager.NavigateTo("/");
+    }
+
+    void HandleReturn()
+    {
+        // back to home page
+        NavigationManager.NavigateTo("/");
+    }
+}
