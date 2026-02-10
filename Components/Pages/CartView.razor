@@ -2,11 +2,13 @@
 @using Models
 @inject CartState CartService
 
-@if (MyCart.Items.Any()) {
+@if (MyCart.Items.Any())
+{
     <div>
         <button @onclick="@(() => CartService.closeCart())">Close</button>
         <h2>Your Cart</h2>
-        @foreach (var cartItem in MyCart.Items) {
+        @foreach (var cartItem in MyCart.Items)
+        {
             <div class="card-body">
                 <div>
                     <img src="@cartItem.GroceryItem.ImageUrl" style="height:200px; object-fit:cover;">
@@ -24,8 +26,17 @@
         }
         <div>Cart Total @MyCart.GetFormattedTotalPrice()</div>
     </div>
-} else {
+}
+else
+{
     <div class="empty-cart">Choose an item<br>to get started</div>
+}
+
+@if (MyCart.Items.Any())
+{
+    <div>
+        <a href="/checkout" class="btn btn-success">Checkout</a>
+    </div>
 }
 
 @code {
