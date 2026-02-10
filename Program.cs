@@ -29,6 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSnakeCaseNamingConvention();
 });
 
+builder.Services.AddScoped<IGroceryItemService, GroceryItemService>();
 builder.Services.AddScoped<GroceryService>();
 builder.Services.AddScoped<CartState>();
 

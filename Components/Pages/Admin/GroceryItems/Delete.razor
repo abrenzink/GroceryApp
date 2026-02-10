@@ -1,0 +1,122 @@
+@page "/admin/grocery-items/delete/{id:int}"
+@rendermode InteractiveServer
+
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+@using GroceryApp.Models
+@using GroceryApp.Services
+@inject IGroceryItemService GroceryItemService
+@inject NavigationManager Navigation
+
+<PageTitle>Delete Grocery Item</PageTitle>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+          <h2><i class="bi bi-exclamation-triangle"></i> Delete Confirmation</h2>
+        </div>
+        <div class="card-body">
+          @if (isLoading)
+          {
+            <p><em>Loading...</em></p>
+          }
+          else if (notFound)
+          {
+            <div class="alert alert-danger">
+              <i class="bi bi-exclamation-triangle"></i> Item not found.
+            </div>
+            <button class="btn btn-secondary" @onclick="GoBack">
+              <i class="bi bi-arrow-left"></i> Back to List
+            </button>
+          }
+          else if (item != null)
+          {
+            <div class="alert alert-warning">
+              <strong>Warning!</strong> Are you sure you want to delete this item? This action cannot be undone.
+            </div>
+
+            <dl class="row">
+              <dt class="col-sm-4">Name:</dt>
+              <dd class="col-sm-8">@item.Name</dd>
+
+              <dt class="col-sm-4">Category:</dt>
+              <dd class="col-sm-8">@item.Category</dd>
+
+              <dt class="col-sm-4">Price:</dt>
+              <dd class="col-sm-8">$@item.Price.ToString("F2")</dd>
+
+              <dt class="col-sm-4">Stock:</dt>
+              <dd class="col-sm-8">@item.Stock</dd>
+
+              <dt class="col-sm-4">Status:</dt>
+              <dd class="col-sm-8">
+                @if (item.IsAvailable)
+                {
+                  <span class="badge bg-success">Active</span>
+                }
+                else
+                {
+                  <span class="badge bg-warning">Inactive</span>
+                }
+              </dd>
+
+              <dt class="col-sm-4">Created By:</dt>
+              <dd class="col-sm-8">@item.Admin?.Name</dd>
+            </dl>
+
+            <div class="d-flex justify-content-between">
+              <button class="btn btn-secondary" @onclick="GoBack">
+                <i class="bi bi-arrow-left"></i> Cancel
+              </button>
+              <button class="btn btn-danger" @onclick="HandleDelete">
+                <i class="bi bi-trash"></i> Delete Item
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@code {
+  [Parameter]
+  public int Id { get; set; }
+
+  private GroceryItem? item;
+  private bool isLoading = true;
+  private bool notFound = false;
+
+  protected override async Task OnInitializedAsync()
+  {
+    item = await GroceryItemService.GetByIdAsync(Id);
+        
+    if (item == null)
+    {
+      notFound = true;
+    }
+        
+    isLoading = false;
+  }
+
+  private async Task HandleDelete()
+  {
+    var success = await GroceryItemService.DeleteAsync(Id);
+        
+    if (success)
+    {
+      Navigation.NavigateTo("/admin/grocery-items");
+    }
+    else
+    {
+      notFound = true;
+    }
+  }
+
+  private void GoBack()
+  {
+    Navigation.NavigateTo("/admin/grocery-items");
+  }
+}
