@@ -1,0 +1,226 @@
+/* ============================================
+   ADMIN GROCERY ITEMS - STYLES
+   Solo aplicar cuando existe la clase .admin-page
+   ============================================ */
+
+/* Variables de colores según especificación */
+:root {
+  --primary-green: #4caf50;
+  --primary-green-dark: #43a047;
+  --secondary-orange: #ff9800;
+  --secondary-orange-dark: #fb8c00;
+  --bg-cream: #fff9f2;
+  --bg-card: #f5f5f5;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --success-green: #2e7d32;
+  --success-bg: #c8e6c9;
+  --error-red: #d32f2f;
+  --error-bg: #ffcdd2;
+  --warning-amber: #ffa000;
+  --warning-bg: #ffe0b2;
+  --info-blue: #0288d1;
+  --info-bg: #b3e5fc;
+}
+
+/* Solo aplicar cuando existe .admin-page */
+.admin-page {
+  background-color: var(--bg-cream);
+  min-height: 100vh;
+}
+
+/* Tipografía */
+.admin-page h1,
+.admin-page h2,
+.admin-page h3 {
+  font-family: "Montserrat", sans-serif;
+  color: var(--text-primary);
+}
+
+.admin-page h1 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.admin-page h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.admin-page p,
+.admin-page span,
+.admin-page div,
+.admin-page td,
+.admin-page th {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.admin-page label,
+.admin-page .form-label {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Botones Primary */
+.admin-page .btn-primary {
+  background-color: var(--primary-green) !important;
+  border-color: var(--primary-green) !important;
+  color: #fff !important;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.admin-page .btn-primary:hover {
+  background-color: var(--primary-green-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+/* Botones Warning (Naranja) */
+.admin-page .btn-warning {
+  background-color: var(--secondary-orange) !important;
+  border-color: var(--secondary-orange) !important;
+  color: #fff !important;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+
+.admin-page .btn-warning:hover {
+  background-color: var(--secondary-orange-dark) !important;
+  transform: translateY(-2px);
+}
+
+/* Botones Danger */
+.admin-page .btn-danger {
+  background-color: var(--error-red) !important;
+  border-color: var(--error-red) !important;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+
+/* Formularios */
+.admin-page .form-control,
+.admin-page .form-select {
+  background-color: var(--bg-card);
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.admin-page .form-control:focus,
+.admin-page .form-select:focus {
+  background-color: #fff;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Cards */
+.admin-page .card {
+  background-color: var(--bg-cream);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: none;
+}
+
+.admin-page .card-header.bg-primary {
+  background-color: var(--primary-green) !important;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+.admin-page .card-header.bg-warning {
+  background-color: var(--secondary-orange) !important;
+  color: #fff;
+}
+
+.admin-page .card-header.bg-danger {
+  background-color: var(--error-red) !important;
+  color: #fff;
+}
+
+/* Tablas */
+.admin-page .table-dark {
+  background-color: var(--primary-green) !important;
+  color: #fff !important; /* ← AGREGAR ESTA LÍNEA */
+}
+
+.admin-page .table-dark th {
+  color: #fff !important; /* ← Y ESTA */
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.admin-page .table-hover tbody tr:hover {
+  background-color: #e8f5e9;
+}
+
+/* Badges */
+.admin-page .badge.bg-success {
+  background-color: var(--success-green) !important;
+}
+
+.admin-page .badge.bg-warning {
+  background-color: var(--warning-amber) !important;
+  color: #fff !important;
+}
+
+.admin-page .badge.bg-danger {
+  background-color: var(--error-red) !important;
+}
+
+.admin-page .badge.bg-info {
+  background-color: var(--info-blue) !important;
+}
+
+/* Alerts */
+.admin-page .alert-success {
+  background-color: var(--success-bg) !important;
+  color: var(--success-green) !important;
+  border-radius: 8px;
+}
+
+.admin-page .alert-danger {
+  background-color: var(--error-bg) !important;
+  color: var(--error-red) !important;
+}
+
+.admin-page .alert-warning {
+  background-color: var(--warning-bg) !important;
+  color: var(--warning-amber) !important;
+}
+
+/* Imágenes de productos */
+.admin-page .product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.admin-page .product-image-placeholder {
+  width: 50px;
+  height: 50px;
+  background-color: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-page h1 {
+    font-size: 24px;
+  }
+  .admin-page h2 {
+    font-size: 20px;
+  }
+  .admin-page p {
+    font-size: 14px;
+  }
+}
