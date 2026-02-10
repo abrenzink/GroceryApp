@@ -106,10 +106,12 @@
                     <td class="align-middle">@item.Admin?.Name</td>
                     <td class="align-middle">
                       <div class="btn-group" role="group">
-                        <button class="btn btn-sm btn-warning" @onclick="() => NavigateToEdit(item.Id)">
+                        <button class="btn btn-sm btn-warning" @onclick="() => NavigateToEdit(item.Id)" title="Edit"
+                                data-bs-toggle="tooltip">
                           <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-sm btn-danger" @onclick="() => NavigateToDelete(item.Id)">
+                        <button class="btn btn-sm btn-danger" @onclick="() => NavigateToDelete(item.Id)" title="Delete"
+                                data-bs-toggle="tooltip">
                           <i class="bi bi-trash"></i>
                         </button>
                       </div>
