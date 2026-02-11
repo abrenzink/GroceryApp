@@ -6,13 +6,17 @@
 
 <AuthorizeView>
     <Authorized>
-        <h3>Welcome, @context.User.Identity?.Name!</h3>
-        <p>You are logged in.</p>
-        <a href="/groceryitemservice">Start Shopping</a>
+        <div class="welcome-content">
+            <h3>Welcome, @context.User.Identity?.Name!</h3>
+            <p>You are logged in.</p>
+            <a href="/groceryitemservice">Start Shopping</a>
+        </div>
     </Authorized>
     <NotAuthorized>
-        <h3>Welcome!</h3>
-        <p>You're logged out. <a href="login">Click here to login</a>.</p>
+        <div class="welcome-content">
+            <h3>Welcome!</h3>
+            <p>You're logged out. <a href="login">Click here to login</a>.</p>
+        </div>
     </NotAuthorized>
 </AuthorizeView>
-<GroceryItemService/>
+<GroceryItemService />

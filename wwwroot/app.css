@@ -1,3 +1,22 @@
+:root {
+  --primary-green: #4caf50;
+  --primary-green-dark: #43a047;
+  --secondary-orange: #ff9800;
+  --secondary-orange-dark: #fb8c00;
+  --bg-cream: #fff9f2;
+  --bg-card: #f5f5f5;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --success-green: #2e7d32;
+  --success-bg: #c8e6c9;
+  --error-red: #d32f2f;
+  --error-bg: #ffcdd2;
+  --warning-amber: #ffa000;
+  --warning-bg: #ffe0b2;
+  --info-blue: #0288d1;
+  --info-bg: #b3e5fc;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -48,4 +67,231 @@ h1:focus {
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
+}
+
+/* -------------------- Grocery Page -------------------- */
+
+.card-grocery {
+    margin: 20px;
+    padding: 20px;
+    background-color: var(--bg-cream);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.30);
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    height: auto;  
+    width: 430px;
+}
+
+
+
+.addTocartBtn, .deleteBtn {
+    width: 30%;
+    border: none;
+    background-color: var(--primary-green);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.20);
+}
+
+.deleteBtn {
+    margin-left: 20px;
+    background-color: var(--error-red);
+}
+
+.addTocartBtn:hover, .deleteBtn:hover {
+    background-color: var(--primary-green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.30);
+}
+
+.card-grocery > .addTocartBtn {
+    margin-top: auto;
+    width: 100%;
+}
+
+.card-content {
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
+}
+
+/*
+.card-body {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-align: left;
+}
+    */
+
+
+.product-image {
+    width: 200px;
+    height: 160px;
+    min-width: 200px;
+    max-width: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.product-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.openCartBtn, .closeCartBtn, .checkoutBtn {
+    border-radius: 50px;
+    width: 8%;
+    font-size: 18px;
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    margin-bottom: 20px;
+    height: 40px;
+}
+
+.closeCartBtn {
+    background-color: var(--error-red);
+}
+
+.cart-total {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0 20px 0;
+}
+
+.empty-cart {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+.card-cart {
+    margin: 20px;
+    padding: 20px;
+    background-color: var(--bg-cream);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.30);
+    width: 430px;
+    height: auto;
+}
+
+.cart-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cartHeading {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.quantityBtn {
+    width: 10%;
+    border: none;
+    background-color: var(--primary-green);
+    color: white;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.20);
+}
+
+.cartCardBtns {
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* -------------------- Login Page and Checkout Page -------------------- */
+
+.login-content, .checkout-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 2rem;
+}
+
+.form-group input {
+    background-color: var(--bg-card);
+    border: none;
+    border-radius: 10px;
+    height: 45px;
+    width: 300px;
+    padding: 0 15px;
+
+}
+
+.login-content h3, .form-group h3 {
+    font-size: 28px;
+    text-align: center;
+}
+
+.passwordInput, .emailInput {
+    width: 30%;
+    font-size: 18px;
+}
+
+.passwordInput input, .emailInput input {
+    background-color: var(--bg-card);
+    border: none;
+    border-radius: 10px;
+    height: 45px;
+}
+
+.loginBtn, .checkoutBtn, .returnBtn, .buyNowBtn {
+    border-radius: 50px;
+    font-size: 18px;
+    color: white;
+    border: none;
+    height: 40px;
+}
+
+.loginBtn {
+    background-color: var(--success-green);
+    width: 8%;
+}
+
+.buyNowBtn {
+    background-color: var(--success-green);
+    width: 40%;
+}
+
+.returnBtn {
+    width: 30%;
+    background-color: var(--error-red);
+    margin: 10px 20px 10px 10px;
+}
+
+/* -------------------- Welcome Content -------------------- */
+
+.welcome-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 2rem;
+}
+
+/* -------------------- Checkout Content -------------------- */
+
+.checkoutTableContainer {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.checkout-table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    width: 50%;
+    border: 1px solid black;
 }

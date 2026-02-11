@@ -4,28 +4,34 @@
 
 @if (MyCart.Items.Any())
 {
-    <div>
-        <button @onclick="@(() => CartService.closeCart())">Close</button>
-        <h2>Your Cart</h2>
+    <button class="closeCartBtn" @onclick="@(() => CartService.closeCart())">Close</button>
+    <h2 class="cartHeading">Your Cart</h2>
+    <div class="cart-container">
         @foreach (var cartItem in MyCart.Items)
         {
-            <div class="card-body">
-                <div>
-                    <img src="@cartItem.GroceryItem.ImageUrl" style="height:200px; object-fit:cover;">
+            <div class="card-cart">
+                <div class="card-content">
+                    <img class="product-image" src="@cartItem.GroceryItem.ImageUrl" style="height:200px; object-fit:cover;">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">Name: @(cartItem.GroceryItem.Name)</div>
+                            <div>Quantity: @(cartItem.Quantity)</div>
+                        </div>
+                        <div>Unit Price: @cartItem.GroceryItem.Price</div>
+                        <div>SubTotal Price: @cartItem.GetSubtotalFormatted()</div>
+                    </div>
                 </div>
-                <div>
-                    <div class="card-title">Name: @(cartItem.GroceryItem.Name)</div>
-                    <div>Quantity: @(cartItem.Quantity)</div>
+                <div class="cartCardBtns">
+                    <Button class="quantityBtn"
+                            @onclick="@(() => CartService.decrementQuantity(cartItem.GroceryItem))">-</Button>
+                    <Button class="quantityBtn"
+                            @onclick="@(() => CartService.incrementQuantity(cartItem.GroceryItem))">+</Button>
+                    <Button class="deleteBtn" @onclick="@(() => CartService.deleteFromCart(cartItem))">Delete</Button>
                 </div>
-                <div>Unit Price: @cartItem.GroceryItem.Price</div>
-                <div>SubTotal Price: @cartItem.GetSubtotalFormatted()</div>
-                <Button @onclick="@(() => CartService.decrementQuantity(cartItem.GroceryItem))">-</Button>
-                <Button @onclick="@(() => CartService.incrementQuantity(cartItem.GroceryItem))">+</Button>
-                <Button @onclick="@(() => CartService.deleteFromCart(cartItem))">Delete</Button>
             </div>
         }
-        <div>Cart Total @MyCart.GetFormattedTotalPrice()</div>
     </div>
+    <div class="cart-total">Cart Total @MyCart.GetFormattedTotalPrice()</div>
 }
 else
 {
@@ -35,7 +41,7 @@ else
 @if (MyCart.Items.Any())
 {
     <div>
-        <a href="/checkout" class="btn btn-success">Checkout</a>
+        <a href="/checkout" class="btn btn-primary checkoutBtn">Checkout</a>
     </div>
 }
 
