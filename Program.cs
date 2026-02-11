@@ -48,11 +48,11 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<AppDbContext>();
 
         Console.WriteLine("Creating database...");
-        // Crear la base de datos si no existe
+        // Create the database if it doesn't exist
         context.Database.EnsureCreated();
         Console.WriteLine("Database created/verified");
 
-        // Inicializar datos
+        // Initialize data
         DbInitializer.Initialize(context);
     }
     catch (Exception ex)
@@ -72,6 +72,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseStatusCodePagesWithRedirects("/not-found");
 
 app.UseHttpsRedirection();
 

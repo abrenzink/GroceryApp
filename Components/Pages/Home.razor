@@ -1,5 +1,6 @@
 ﻿@page "/"
 @page "/home"
+@rendermode InteractiveServer
 @using Microsoft.AspNetCore.Components.Authorization
 
 <PageTitle>Home</PageTitle>
@@ -19,4 +20,18 @@
         </div>
     </NotAuthorized>
 </AuthorizeView>
+
+
+<!-- Implemented only to test the error -->
+<!-- <div class="my-3">
+    <button class="btn btn-danger" @onclick="TriggerError">Test Error</button>
+</div> -->
+
 <GroceryItemService />
+
+@code {
+    private void TriggerError()
+    {
+        throw new InvalidOperationException("This is a test exception to verify error handling!");
+    }
+}

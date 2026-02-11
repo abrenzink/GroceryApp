@@ -22,11 +22,11 @@
                     </div>
                 </div>
                 <div class="cartCardBtns">
-                    <Button class="quantityBtn"
-                            @onclick="@(() => CartService.decrementQuantity(cartItem.GroceryItem))">-</Button>
-                    <Button class="quantityBtn"
-                            @onclick="@(() => CartService.incrementQuantity(cartItem.GroceryItem))">+</Button>
-                    <Button class="deleteBtn" @onclick="@(() => CartService.deleteFromCart(cartItem))">Delete</Button>
+                    <button class="quantityBtn"
+                            @onclick="@(() => CartService.decrementQuantity(cartItem.GroceryItem))">-</button>
+                    <button class="quantityBtn"
+                            @onclick="@(() => CartService.incrementQuantity(cartItem.GroceryItem))">+</button>
+                    <button class="deleteBtn" @onclick="@(() => CartService.deleteFromCart(cartItem))">Delete</button>
                 </div>
             </div>
         }
