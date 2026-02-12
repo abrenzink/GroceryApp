@@ -136,6 +136,9 @@
 @code {
   private List<GroceryItem>? groceryItems;
 
+  /// <summary>
+  /// Loads all grocery items when the component initializes.
+  /// </summary>
   protected override async Task OnInitializedAsync()
   {
     groceryItems = await GroceryItemService.GetAllAsync();
