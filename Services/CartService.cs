@@ -92,6 +92,7 @@ public class CartState
         if ( cartItem != null ) 
         {
             cartItem.Quantity++;
+            showCart = true;
             NotifyStateChanged();
         }
     }
@@ -141,6 +142,7 @@ public class CartState
         }
         
         Console.WriteLine(Cart.ToString());
+        showCart = true;
         NotifyStateChanged();
     }
 
