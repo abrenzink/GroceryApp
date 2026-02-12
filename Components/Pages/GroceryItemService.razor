@@ -88,8 +88,15 @@ else
     private List<GroceryItem>? products;
     private bool isLoading = true;
     private string? errorMessage;
+    
+    /// <summary>
+    /// Gets the current shopping cart from the state service.
+    /// </summary>
     ShoppingCart Cart => CartService.Cart;
 
+    /// <summary>
+    /// Initializes the component, loading products and subscribing to cart updates.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         try
@@ -116,6 +123,9 @@ else
         }
     }
 
+    /// <summary>
+    /// Unsubscribes from cart events when the component is disposed.
+    /// </summary>
     public void Dispose()
     {
         CartService.OnChange -= StateHasChanged;

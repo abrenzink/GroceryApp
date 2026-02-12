@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Configure authentication with Cookies
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -18,6 +19,7 @@ builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.Cookies.C
         options.AccessDeniedPath = "/access-denied";
     });
 
+// Add cascading authentication state for Blazor components
 builder.Services.AddCascadingAuthenticationState();
 
 
@@ -26,9 +28,11 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"));
+    // Use snake case naming convention for database columns
     options.UseSnakeCaseNamingConvention();
 });
 
+// Register application services
 builder.Services.AddScoped<IGroceryItemService, GroceryItemService>();
 builder.Services.AddScoped<GroceryService>();
 builder.Services.AddScoped<CartState>();
@@ -73,6 +77,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Redirect middleware for 404 errors
 app.UseStatusCodePagesWithRedirects("/not-found");
 
 app.UseHttpsRedirection();
@@ -83,11 +88,13 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+// Test endpoint to retrieve users
 app.MapGet("/test-users", async (AppDbContext db) =>
 {
     return await db.Users.ToListAsync();
 });
 
+// Logout endpoint
 app.MapPost("/logout", async (HttpContext context) =>
 {
     await context.SignOutAsync(Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
