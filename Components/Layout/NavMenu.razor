@@ -15,6 +15,11 @@
         <NavLink class="nav-link" href="Orders">
             Orders
         </NavLink>
+        <AuthorizeView Roles="Admin">
+            <NavLink class="nav-link" href="admin/grocery-items">
+                Admin Items
+            </NavLink>
+        </AuthorizeView>
     </div>
 
     <div class="nav-icons-container">
