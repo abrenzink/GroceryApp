@@ -5,6 +5,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @inject GroceryService GroceryService
 @inject CartState CartService
+@inject IJSRuntime JSRuntime
 @rendermode InteractiveServer
 
 @if (CartService.showCart)
@@ -65,18 +66,27 @@ else
                             <p><small>ID: @product.Id | Available: @product.IsAvailable</small></p>
                         </div>
                     </div>
-                    @if (!CartService.isInCart(product))
-                    {
-                        <button class="addTocartBtn" @onclick="@(() => CartService.addToCart(product))">
-                            Add to Cart
-                        </button>
-                    }
-                    else
-                    {
-                        <button class="addTocartBtn" @onclick="@(() => CartService.incrementQuantity(product))">
-                            Add One More To Cart
-                        </button>
-                    }
+                    <AuthorizeView>
+                        <Authorized>
+                            @if (!CartService.isInCart(product))
+                            {
+                                <button class="addTocartBtn" @onclick="@(() => CartService.addToCart(product))">
+                                    Add to Cart
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="addTocartBtn" @onclick="@(() => CartService.incrementQuantity(product))">
+                                    Add One More To Cart
+                                </button>
+                            }
+                        </Authorized>
+                        <NotAuthorized>
+                            <button class="addTocartBtn" @onclick="AlertLogin">
+                                Add to Cart
+                            </button>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </div>
             </div>
         }
@@ -88,8 +98,15 @@ else
     private List<GroceryItem>? products;
     private bool isLoading = true;
     private string? errorMessage;
+    
+    /// <summary>
+    /// Gets the current shopping cart from the state service.
+    /// </summary>
     ShoppingCart Cart => CartService.Cart;
 
+    /// <summary>
+    /// Initializes the component, loading products and subscribing to cart updates.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         try
@@ -116,6 +133,17 @@ else
         }
     }
 
+    /// <summary>
+    /// Displays an alert to the user to login.
+    /// </summary>
+    private async Task AlertLogin()
+    {
+        await JSRuntime.InvokeVoidAsync("alert", "Please login to add items to cart.");
+    }
+
+    /// <summary>
+    /// Unsubscribes from cart events when the component is disposed.
+    /// </summary>
     public void Dispose()
     {
         CartService.OnChange -= StateHasChanged;

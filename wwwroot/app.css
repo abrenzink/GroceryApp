@@ -1,27 +1,29 @@
 :root {
-  --primary-green: #4caf50;
-  --primary-green-dark: #43a047;
-  --secondary-orange: #ff9800;
-  --secondary-orange-dark: #fb8c00;
-  --bg-cream: #fff9f2;
-  --bg-card: #f5f5f5;
-  --text-primary: #212121;
-  --text-secondary: #757575;
-  --success-green: #2e7d32;
-  --success-bg: #c8e6c9;
-  --error-red: #d32f2f;
-  --error-bg: #ffcdd2;
-  --warning-amber: #ffa000;
-  --warning-bg: #ffe0b2;
-  --info-blue: #0288d1;
-  --info-bg: #b3e5fc;
+    --primary-green: #4caf50;
+    --primary-green-dark: #43a047;
+    --secondary-orange: #ff9800;
+    --secondary-orange-dark: #fb8c00;
+    --bg-cream: #fff9f2;
+    --bg-card: #f5f5f5;
+    --text-primary: #212121;
+    --text-secondary: #757575;
+    --success-green: #2e7d32;
+    --success-bg: #c8e6c9;
+    --error-red: #d32f2f;
+    --error-bg: #ffcdd2;
+    --warning-amber: #ffa000;
+    --warning-bg: #ffe0b2;
+    --info-blue: #0288d1;
+    --info-bg: #b3e5fc;
 }
 
-html, body {
+html,
+body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-a, .btn-link {
+a,
+.btn-link {
     color: #006bb7;
 }
 
@@ -31,8 +33,12 @@ a, .btn-link {
     border-color: #1861ac;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -61,9 +67,9 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
@@ -83,20 +89,19 @@ h1:focus {
 }
 
 .card-grocery {
-    margin: 20px;
+    margin: 0 0 20px 0;
     padding: 20px;
     background-color: var(--bg-cream);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.30);
     display: flex;
     flex-direction: column;
     min-height: 400px;
-    height: auto;  
-    width: 430px;
+    height: auto;
+    width: 100%;
 }
 
-
-
-.addTocartBtn, .deleteBtn {
+.addTocartBtn,
+.deleteBtn {
     width: 30%;
     border: none;
     background-color: var(--primary-green);
@@ -114,31 +119,35 @@ h1:focus {
     background-color: var(--error-red);
 }
 
-.addTocartBtn:hover, .deleteBtn:hover {
+.addTocartBtn:hover,
+.deleteBtn:hover {
     background-color: var(--primary-green-dark);
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.30);
 }
 
-.card-grocery > .addTocartBtn {
+.card-grocery>.addTocartBtn {
     margin-top: auto;
     width: 100%;
 }
 
 .card-content {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     overflow: hidden;
 }
 
+.card-body {
+    padding: 10px 0;
+    text-align: left;
+}
+
 .product-image {
-    width: 200px;
-    height: 160px;
-    min-width: 200px;
-    max-width: 160px;
+    width: 100%;
+    height: 200px;
     object-fit: cover;
     border-radius: 8px;
-    flex-shrink: 0;
 }
 
 .product-title {
@@ -147,19 +156,33 @@ h1:focus {
     margin-bottom: 10px;
 }
 
-.openCartBtn, .closeCartBtn, .checkoutBtn {
+.openCartBtn,
+.checkoutBtn {
     border-radius: 50px;
-    width: 8%;
+    width: 150px;
     font-size: 18px;
     background-color: var(--primary-green);
     color: white;
     border: none;
     margin-bottom: 20px;
     height: 40px;
+    cursor: pointer;
 }
 
 .closeCartBtn {
     background-color: var(--error-red);
+    width: auto;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.closeCartBtn:hover {
+    background-color: #b71c1c;
 }
 
 .cart-total {
@@ -174,48 +197,89 @@ h1:focus {
     margin-bottom: 30px;
 }
 
-.card-cart {
-    margin: 20px;
-    padding: 20px;
-    background-color: var(--bg-cream);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.30);
-    width: 430px;
-    height: auto;
-}
-
 .cart-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    /* Stack vertically in the overlay for better flow */
+    gap: 10px;
 }
 
-.cartHeading {
-    text-align: center;
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-.quantityBtn {
-    width: 10%;
-    border: none;
-    background-color: var(--primary-green);
-    color: white;
-    padding: 5px;
-    margin: 10px;
+.card-cart {
+    margin: 5px 0;
+    padding: 10px;
+    /* Reduced padding */
+    background-color: var(--bg-cream);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    /* Softer shadow */
+    width: 100%;
+    /* Take full width of container */
+    height: auto;
     border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.20);
+    display: flex;
+    /* Use flex to align image and content side-by-side */
+    align-items: center;
+}
+
+.card-cart .card-content {
+    display: flex;
+    flex-direction: row;
+    /* Horizontal layout */
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.card-cart .product-image {
+    width: 60px;
+    /* Much smaller image */
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.card-cart .card-body {
+    padding: 0;
+    text-align: left;
+    font-size: 0.9rem;
+    /* Smaller text */
+    flex-grow: 1;
+}
+
+.card-cart .card-title {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 2px;
 }
 
 .cartCardBtns {
-    margin-top: 10px;
-    text-align: center;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    /* Stack buttons vertically or keep small */
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.quantityBtn {
+    width: 25px;
+    /* Smaller buttons */
+    height: 25px;
+    padding: 0;
+    font-size: 14px;
+    margin: 0;
+}
+
+.deleteBtn {
+    width: auto;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin-left: 0;
 }
 
 /* -------------------- Login Page and Checkout Page -------------------- */
 
-.login-content, .checkout-content {
+.login-content,
+.checkout-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -233,24 +297,30 @@ h1:focus {
 
 }
 
-.login-content h3, .form-group h3 {
+.login-content h3,
+.form-group h3 {
     font-size: 28px;
     text-align: center;
 }
 
-.passwordInput, .emailInput {
+.passwordInput,
+.emailInput {
     width: 30%;
     font-size: 18px;
 }
 
-.passwordInput input, .emailInput input {
+.passwordInput input,
+.emailInput input {
     background-color: var(--bg-card);
     border: none;
     border-radius: 10px;
     height: 45px;
 }
 
-.loginBtn, .checkoutBtn, .returnBtn, .buyNowBtn {
+.loginBtn,
+.checkoutBtn,
+.returnBtn,
+.buyNowBtn {
     border-radius: 50px;
     font-size: 18px;
     color: white;
@@ -307,4 +377,74 @@ h1:focus {
 
 .thankyou-container h1 {
     color: var(--primary-green);
+}
+
+.cart-overlay {
+    position: fixed;
+    top: 80px;
+    /* Adjust based on navbar height */
+    right: 0;
+    width: 400px;
+    height: calc(100% - 80px);
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 20px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .cart-overlay {
+        width: 100%;
+        top: 60px;
+        /* Adjust for mobile navbar height if needed */
+        height: calc(100% - 60px);
+    }
+
+
+    .passwordInput,
+    .emailInput {
+        width: 80%;
+    }
+
+    .form-group input,
+    .passwordInput input,
+    .emailInput input {
+        width: 100%;
+    }
+
+    .loginBtn {
+        width: 50%;
+    }
+
+    /* Cart Responsiveness */
+    .cart-container {
+        grid-template-columns: 1fr;
+    }
+
+    .card-cart {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    /* Checkout Table Responsiveness */
+    .checkoutTableContainer {
+        width: 95%;
+    }
+
+    .openCartBtn,
+    .checkoutBtn {
+        width: 50%;
+    }
 }

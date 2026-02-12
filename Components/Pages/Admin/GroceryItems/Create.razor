@@ -113,7 +113,7 @@
   {
 
 
-    int adminId = 1; // Valor por defecto
+    int adminId = 1; // Default value
         
     if (AuthenticationStateTask != null)
     {
@@ -151,12 +151,12 @@
     }
     catch (Microsoft.AspNetCore.Components.NavigationException)
     {
-      // Ignorar: Blazor usa esta excepción internamente para navegar
+      // Ignore: Blazor uses this exception internally for navigation
     }
     catch (Exception ex)
     {
       Console.WriteLine($"Error creating item: {ex.Message}");
-      // TODO: Mostrar mensaje de error al usuario
+      // TODO: Show error message to user
     }
 
   }
