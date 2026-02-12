@@ -80,7 +80,13 @@ h1:focus {
 .appLogo {
     width: 43px;
     height: 43px;
+    margin: 10px;
 }
+
+.appName {
+    color: white; 
+    margin: 10px;
+}    
 
 .container-nav {
     display: flex;
