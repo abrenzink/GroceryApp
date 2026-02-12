@@ -1,19 +1,40 @@
 using Microsoft.EntityFrameworkCore;
 using EFCore.NamingConventions;
-using Models;
+using GroceryApp.Models;
 
-namespace Data;
+namespace GroceryApp.Data;
 
+/// <summary>
+/// Database context for the application, handling entity interactions and configurations.
+/// </summary>
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    // DbSets for the main entities
+    /// <summary>
+    /// Represents the Users table.
+    /// </summary>
     public DbSet<User> Users { get; set; }
+    
+    /// <summary>
+    /// Represents the GroceryItems table.
+    /// </summary>
     public DbSet<GroceryItem> GroceryItems { get; set; }
+    
+    /// <summary>
+    /// Represents the ShoppingCarts table.
+    /// </summary>
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+    
+    /// <summary>
+    /// Represents the CartItems table.
+    /// </summary>
     public DbSet<CartItem> CartItems { get; set; }
 
+    /// <summary>
+    /// Configures the database context options.
+    /// </summary>
+    /// <param name="optionsBuilder">The builder being used to configure the context.</param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 

@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using Data;
-using Models;
+using GroceryApp.Data;
+using GroceryApp.Models;
 
 namespace GroceryApp.Services;
 
+/// <summary>
+/// Service responsible for managing grocery product retrieval.
+/// </summary>
 public class GroceryService
 {
   private readonly AppDbContext _context;
@@ -13,7 +16,10 @@ public class GroceryService
     _context = context;
   }
 
-  // Get all available products
+  /// <summary>
+  /// Retrieves all available grocery products from the database, logging the process.
+  /// </summary>
+  /// <returns>A list of available grocery items.</returns>
   public async Task<List<GroceryItem>> GetAvailableProductsAsync()
   {
 

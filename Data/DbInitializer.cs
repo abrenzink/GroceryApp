@@ -1,6 +1,6 @@
-using Models;
+using GroceryApp.Models;
 
-namespace Data;
+namespace GroceryApp.Data;
 
 public static class DbInitializer
 {

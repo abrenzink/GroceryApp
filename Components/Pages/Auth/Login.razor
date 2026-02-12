@@ -9,8 +9,6 @@
 @inject AppDbContext DbContext
 @inject NavigationManager Navigation
 
-<h3>Login</h3>
-
 <!--
     EditForm with an EditContext to uniquely identify this form.
     OnValidSubmit calls OnSubmit when form validation passes.
@@ -19,26 +17,31 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <!-- Email input with required and email format validation -->
-    <div class="mb-3">
-        <label>Email</label>
-        <InputText class="form-control" @bind-Value="model.Email" />
+    <div class="login-content">
+
+        <h3>Login</h3>
+
+        <!-- Email input with required and email format validation -->
+        <div class="mb-3 emailInput">
+            <label>Email</label>
+            <InputText class="form-control" @bind-Value="model.Email" />
+        </div>
+
+        <!-- Password input with required validation -->
+        <div class="mb-3 passwordInput">
+            <label>Password</label>
+            <InputText class="form-control" @bind-Value="model.Password" type="password" />
+        </div>
+
+        <!-- Submit button -->
+        <button class="btn btn-primary loginBtn" type="submit">Login</button>
+
+        <!-- Error message if login fails -->
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="text-danger mt-2">@errorMessage</div>
+        }
     </div>
-
-    <!-- Password input with required validation -->
-    <div class="mb-3">
-        <label>Password</label>
-        <InputText class="form-control" @bind-Value="model.Password" type="password" />
-    </div>
-
-    <!-- Submit button -->
-    <button class="btn btn-primary" type="submit">Login</button>
-
-    <!-- Error message if login fails -->
-    @if (!string.IsNullOrEmpty(errorMessage))
-    {
-        <div class="text-danger mt-2">@errorMessage</div>
-    }
 </EditForm>
 
 @code {
@@ -86,10 +89,10 @@ new Claim("UserId", user.Id.ToString())
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    RedirectUri = "/home"
-                };
+            {
+                IsPersistent = true,
+                RedirectUri = "/home"
+            };
 
             if (HttpContext != null)
             {
