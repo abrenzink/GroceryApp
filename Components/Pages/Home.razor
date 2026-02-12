@@ -1,7 +1,37 @@
 ﻿@page "/"
+@page "/home"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Authorization
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<AuthorizeView>
+    <Authorized>
+        <div class="welcome-content">
+            <h3>Welcome, @context.User.Identity?.Name!</h3>
+            <p>You are logged in.</p>
+            <a href="/groceryitemservice">Start Shopping</a>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="welcome-content">
+            <h3>Welcome!</h3>
+            <p>You're logged out. <a href="login">Click here to login</a>.</p>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 
-Welcome to your new app.
+
+<!-- Implemented only to test the error -->
+<!-- <div class="my-3">
+    <button class="btn btn-danger" @onclick="TriggerError">Test Error</button>
+</div> -->
+
+<GroceryItemService />
+
+@code {
+    private void TriggerError()
+    {
+        throw new InvalidOperationException("This is a test exception to verify error handling!");
+    }
+}

@@ -1,0 +1,130 @@
+@page "/login"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using System.Security.Claims
+@using Microsoft.EntityFrameworkCore
+@using Data
+@using GroceryApp.Services
+@inject AppDbContext DbContext
+@inject NavigationManager Navigation
+
+<!--
+    EditForm with an EditContext to uniquely identify this form.
+    OnValidSubmit calls OnSubmit when form validation passes.
+-->
+<EditForm EditContext="@editContext" OnValidSubmit="OnSubmit" FormName="LoginForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="login-content">
+
+        <h3>Login</h3>
+
+        <!-- Email input with required and email format validation -->
+        <div class="mb-3 emailInput">
+            <label>Email</label>
+            <InputText class="form-control" @bind-Value="model.Email" />
+        </div>
+
+        <!-- Password input with required validation -->
+        <div class="mb-3 passwordInput">
+            <label>Password</label>
+            <InputText class="form-control" @bind-Value="model.Password" type="password" />
+        </div>
+
+        <!-- Submit button -->
+        <button class="btn btn-primary loginBtn" type="submit">Login</button>
+
+        <!-- Error message if login fails -->
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="text-danger mt-2">@errorMessage</div>
+        }
+    </div>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public LoginModel model { get; set; } = new();
+
+    // EditContext uniquely identifies this form and tracks validation state
+    private EditContext editContext = default!;
+
+    // Holds error messages for failed login attempts
+    private string errorMessage = string.Empty;
+
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
+    /// <summary>
+    /// Initialize the EditContext when the component is created.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+    }
+
+    /// <summary>
+    /// Handles the form submission.
+    /// Checks the database for a user matching the email and password.
+    /// If found, creates a cookie session and redirects to home.
+    /// </summary>
+    private async Task OnSubmit()
+    {
+        // Query the database for a user with matching email
+        var user = await DbContext.Users
+        .FirstOrDefaultAsync(u => u.Email == model.Email);
+
+        // Verify if user exists and password hash matches
+        if (user != null && PasswordHelper.VerifyPassword(model.Password, user.PasswordHash))
+        {
+            var claims = new List<Claim>
+{
+new Claim(ClaimTypes.Name, user.Name),
+new Claim(ClaimTypes.Email, user.Email),
+new Claim(ClaimTypes.Role, user.Role),
+new Claim("UserId", user.Id.ToString())
+};
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                RedirectUri = "/home"
+            };
+
+            if (HttpContext != null)
+            {
+                await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+            }
+
+            // Navigation will be handled by RedirectUri in authProperties or manual nav if needed,
+            // but SignInAsync typically handles the response.
+            // However, explicit navigation ensures we go where we want.
+            Navigation.NavigateTo("/home", true);
+        }
+        else
+        {
+            // Login failed: show error message
+            errorMessage = "Email or password is invalid!";
+        }
+    }
+
+    /// <summary>
+    /// Represents the data model for the login form.
+    /// Uses data annotations for required fields and email validation.
+    /// </summary>
+    public class LoginModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        public string Password { get; set; } = string.Empty;
+    }
+}
