@@ -18,11 +18,20 @@
             </NavLink>
         </div> *@
     <div class="nav-item px-3">
-        <NavLink class="nav-link" href="SignIn">
-            <img src="/images/user.png" alt="Sign In">
-        </NavLink>
+        <AuthorizeView>
+            <Authorized>
+                <NavLink class="nav-link" href="profile">
+                    <img src="/images/user.png" alt="Profile">
+                </NavLink>
+            </Authorized>
+            <NotAuthorized>
+                <NavLink class="nav-link" href="login">
+                    <img src="/images/user.png" alt="Sign In">
+                </NavLink>
+            </NotAuthorized>
+        </AuthorizeView>
 
-        <NavLink class="nav-link" href="Cart">
+        <NavLink class="nav-link" href="checkout">
             <img src="/images/cart.png" alt="cart" />
         </NavLink>
     </div>
