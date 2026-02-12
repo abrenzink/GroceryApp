@@ -71,6 +71,17 @@ h1:focus {
 
 /* -------------------- Grocery Page -------------------- */
 
+.appLogo {
+    width: 43px;
+    height: 43px;
+}
+
+.container-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .card-grocery {
     margin: 20px;
     padding: 20px;
@@ -119,16 +130,6 @@ h1:focus {
     gap: 10px;
     overflow: hidden;
 }
-
-/*
-.card-body {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-align: left;
-}
-    */
-
 
 .product-image {
     width: 200px;
@@ -294,4 +295,16 @@ h1:focus {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     width: 50%;
     border: 1px solid black;
+}
+
+
+/* -------------------- Thank You Content -------------------- */
+
+.thankyou-container {
+    text-align: center;
+    padding: 3rem;
+}
+
+.thankyou-container h1 {
+    color: var(--primary-green);
 }
