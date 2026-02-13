@@ -77,6 +77,23 @@ h1:focus {
 
 /* -------------------- Grocery Page -------------------- */
 
+.appLogo {
+    width: 43px;
+    height: 43px;
+    margin: 10px;
+}
+
+.appName {
+    color: white; 
+    margin: 10px;
+}    
+
+.container-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .card-grocery {
     margin: 0 0 20px 0;
     padding: 20px;
@@ -350,6 +367,23 @@ h1:focus {
     margin: 0 auto;
 }
 
+.checkout-table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    width: 50%;
+    border: 1px solid black;
+}
+
+
+/* -------------------- Thank You Content -------------------- */
+
+.thankyou-container {
+    text-align: center;
+    padding: 3rem;
+}
+
+.thankyou-container h1 {
+    color: var(--primary-green);
+}
 
 .cart-overlay {
     position: fixed;

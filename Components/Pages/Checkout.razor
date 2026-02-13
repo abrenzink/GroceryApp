@@ -65,7 +65,7 @@
             </div>
 
             <div>
-                <button class="returnBtn" @onclick="@HandleReturn">Return</button>
+                <button type="button" class="returnBtn" @onclick="@HandleReturn">Return</button>
                 <input type="submit" value="Buy Now" class="btn btn-success buyNowBtn" />
             </div>
 
@@ -86,7 +86,7 @@
     {
         // Process purchase, clear cart, back to home page
         CartService.resetCart();
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/thankyou");
     }
 
     void HandleReturn()
