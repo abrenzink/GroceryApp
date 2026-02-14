@@ -1,15 +1,12 @@
 
 
-**This is a first idea, that will update with the project's update**
-
-
 # GroceryApp
 
 A simple Grocery App: Design Guide and UI Documentation.
 
 
 ## Overview
-GroceryApp is a Blazor-based web application designed to manage grocery items and users. The app provides basic authentication features, product listing, and database-backed data persistence using SQLite.
+GroceryApp is a full-stack Blazor application that allows users to browse grocery items, manage a shopping cart, and complete checkout. The app provides basic authentication features, product listing, and database-backed data persistence using SQLite.
 
 
 
@@ -107,7 +104,49 @@ Existing users and products are detected.
 4. **Manage Users:** Optionally view and manage user accounts.  
 5. **Dashboard:** Monitor app activity and inventory levels.
 
+## Features
+
+### User Features
+- Register and login
+- Browse grocery products
+- Add items to cart
+- Update cart quantities
+- Checkout and place orders
+- View profile
+
+### Admin Features
+- Add new grocery items
+- Edit existing products
+- Delete products
+- View all orders
+- Manage users
+
+## Authentication & Authorization
+Custom authentication with password hashing
+
+Role-based access control: User and Admin
+
+Admin routes restricted to authorized users
+
+
+## Screenshot
+
+### Home Page
+![alt text](image.png)
+
+### Cart Page
+![alt text](image-1.png)
+
+### Checkout Page
+![alt text](image-2.png)
+
+### Login Page
+![alt text](image-4.png)
+
+### Profile Page
+![alt text](image-5.png)
+
 
 ## Conclusion
-
+GroceryApp is a cleanly structured, role-based grocery shopping app built with Blazor Server, EF Core, and SQLite. It demonstrates user authentication, CRUD operations, and a responsive UI.
 
