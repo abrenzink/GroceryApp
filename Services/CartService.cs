@@ -29,12 +29,20 @@ public class CartState
     /// <summary>
     /// Opens the cart view.
     /// </summary>
-    public void openCart() => showCart = true;
+    public void openCart() 
+    {
+        showCart = true;
+        NotifyStateChanged();
+    }
 
     /// <summary>
     /// Closes the cart view.
     /// </summary>
-    public void closeCart() => showCart = false;
+    public void closeCart() 
+    {
+        showCart = false;
+        NotifyStateChanged();
+    }
 
     public CartState(AuthenticationStateProvider authStateProvider)
     {
@@ -84,6 +92,7 @@ public class CartState
         if ( cartItem != null ) 
         {
             cartItem.Quantity++;
+            showCart = true;
             NotifyStateChanged();
         }
     }
@@ -133,6 +142,7 @@ public class CartState
         }
         
         Console.WriteLine(Cart.ToString());
+        showCart = true;
         NotifyStateChanged();
     }
 
