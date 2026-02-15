@@ -33,7 +33,7 @@ CREATE TABLE shopping_carts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     status TEXT NOT NULL DEFAULT 'Active'
-        CHECK (status IN ('Active', 'Completed', 'Abandoned')),
+    CHECK (status IN ('Active', 'Completed', 'Abandoned')),
     total_amount REAL NOT NULL DEFAULT 0.00,
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now')),
