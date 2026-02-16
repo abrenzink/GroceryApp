@@ -19,4 +19,5 @@ public class GroceryItem
 
   [ForeignKey("AdminId")]
   public User? Admin { get; set; }
+  
 }
