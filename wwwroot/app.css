@@ -282,6 +282,24 @@ h1:focus {
     margin-left: 0;
 }
 
+.searchBar {
+    width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.searchBtn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 /* -------------------- Login Page and Checkout Page -------------------- */
 
 .login-content,

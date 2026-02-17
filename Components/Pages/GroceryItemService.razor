@@ -40,9 +40,9 @@ else if (products == null || !products.Any())
 else
 {
     <div class="mb-3">
-    <input type="text" @bind="searchTerm" placeholder="Search products..." />
-    <button class="btn btn-primary" @onclick="Search">Search</button>
-</div>
+        <input class="searchBar" type="text" @bind="searchTerm" placeholder="Search products..." />
+        <button class="btn btn-primary searchBtn" @onclick="Search">Search</button>
+    </div>
 
     <p>Found @products.Count products</p>
     <div class="row">
@@ -106,7 +106,7 @@ else
     private List<GroceryItem>? products;
     private bool isLoading = true;
     private string? errorMessage;
-    
+
     /// <summary>
     /// Gets the current shopping cart from the state service.
     /// </summary>
@@ -116,21 +116,21 @@ else
     /// Initializes the component, loading products and subscribing to cart updates.
     /// </summary>
     private async Task Search()
-{
-    isLoading = true;
+    {
+        isLoading = true;
 
-    if (!string.IsNullOrWhiteSpace(searchTerm))
-        products = await IGroceryItemService.SearchAsync(searchTerm);
-    else
-        products = await GroceryService.GetAvailableProductsAsync();
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+            products = await IGroceryItemService.SearchAsync(searchTerm);
+        else
+            products = await GroceryService.GetAvailableProductsAsync();
 
-    isLoading = false;
-}
+        isLoading = false;
+    }
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            
+
             // Subscribe to cart changes so the UI updates when items are added
             CartService.OnChange += StateHasChanged;
 
@@ -138,7 +138,7 @@ else
             await CartService.InitializeAsync();
 
             Console.WriteLine("=== Component: Loading products ===");
-            
+
             products = await GroceryService.GetAvailableProductsAsync();
             Console.WriteLine($"=== Component: Products loaded: {products?.Count ?? 0} ===");
         }
