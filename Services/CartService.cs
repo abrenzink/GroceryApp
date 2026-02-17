@@ -91,9 +91,12 @@ public class CartState
 
         if ( cartItem != null ) 
         {
-            cartItem.Quantity++;
-            showCart = true;
-            NotifyStateChanged();
+            if (cartItem.Quantity < item.Stock)
+            {
+                cartItem.Quantity++;
+                showCart = true;
+                NotifyStateChanged();
+            }
         }
     }
 
@@ -128,17 +131,23 @@ public class CartState
         var existingItem = Cart.Items.FirstOrDefault(i => i.GroceryItem.Id == item.Id);
         if (existingItem != null)
         {
-            existingItem.Quantity += 1;
+            if (existingItem.Quantity < item.Stock)
+            {
+                existingItem.Quantity += 1;
+            }
         }
         else
         {
-            Cart.Items.Add(new CartItem
+            if (item.Stock > 0)
             {
-                Quantity = 1,
-                GroceryItem = item,
-                ShoppingCart = Cart, // Maintain reference
-                ShoppingCartId = Cart.Id
-            });
+                Cart.Items.Add(new CartItem
+                {
+                    Quantity = 1,
+                    GroceryItem = item,
+                    ShoppingCart = Cart, // Maintain reference
+                    ShoppingCartId = Cart.Id
+                });
+            }
         }
         
         Console.WriteLine(Cart.ToString());
