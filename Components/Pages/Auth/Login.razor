@@ -80,12 +80,12 @@
         if (user != null && PasswordHelper.VerifyPassword(model.Password, user.PasswordHash))
         {
             var claims = new List<Claim>
-{
-new Claim(ClaimTypes.Name, user.Name),
-new Claim(ClaimTypes.Email, user.Email),
-new Claim(ClaimTypes.Role, user.Role),
-new Claim("UserId", user.Id.ToString())
-};
+            {
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("UserId", user.Id.ToString())
+            };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties
@@ -106,18 +106,18 @@ new Claim("UserId", user.Id.ToString())
             // but SignInAsync typically handles the response.
             // However, explicit navigation ensures we go where we want.
             try
-                {
-                        Navigation.NavigateTo("/");
-                }
-                        catch (NavigationException)
-                {
-                    // do nothing
-                }
+            {
+                Navigation.NavigateTo("/");
+            }
+            catch (NavigationException)
+            {
+                // nothing
+            }
 
         }
+        // Login failed: show error message
         else
         {
-            // Login failed: show error message
             errorMessage = "Email or password is invalid!";
         }
     }
