@@ -20,7 +20,7 @@ else
     <button class="btn btn-primary openCartBtn" @onclick="@(() => CartService.openCart())">Open Cart</button>
 }
 <hr>
-<h3 class="product-title">Available Products</h3>
+<h1 class="product-title">Available Products</h1>
 @if (isLoading)
 {
     <p><em>Loading products...</em></p>
@@ -40,7 +40,7 @@ else if (products == null || !products.Any())
 else
 {
     <div class="mb-3">
-        <input class="searchBar" type="text" @bind="searchTerm" placeholder="Search products..." />
+        <input class="searchBar" type="text" @bind="searchTerm" placeholder="Search products..." aria-label="Search products" />
         <button class="btn btn-primary searchBtn" @onclick="Search">Search</button>
     </div>
 
@@ -53,7 +53,7 @@ else
                     <div class="card-content">
                         @if (!string.IsNullOrEmpty(product.ImageUrl))
                         {
-                            <img src="@product.ImageUrl" class="card-img-top product-image" alt="@product.Name"
+                            <img src="@product.ImageUrl" class="card-img-top product-image" alt=""
                                  style="height:200px; object-fit:cover;">
                         }
                         else

@@ -8,14 +8,14 @@
 <AuthorizeView>
     <Authorized>
         <div class="welcome-content">
-            <h3>Welcome, @context.User.Identity?.Name!</h3>
+            <h1>Welcome, @context.User.Identity?.Name!</h1>
             <p>You are logged in.</p>
             <a href="/groceryitemservice">Start Shopping</a>
         </div>
     </Authorized>
     <NotAuthorized>
         <div class="welcome-content">
-            <h3>Welcome!</h3>
+            <h1>Welcome!</h1>
             <p>You're logged out. <a href="login">Click here to login</a>.</p>
         </div>
     </NotAuthorized>
