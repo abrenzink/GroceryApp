@@ -1,13 +1,13 @@
 :root {
-    --primary-green: #4caf50;
-    --primary-green-dark: #43a047;
+    --primary-green: #1b5e20;
+    --primary-green-dark: #0d3d12;
     --secondary-orange: #ff9800;
     --secondary-orange-dark: #fb8c00;
     --bg-cream: #fff9f2;
     --bg-card: #f5f5f5;
     --text-primary: #212121;
     --text-secondary: #757575;
-    --success-green: #2e7d32;
+    --success-green: #1b5e20;
     --success-bg: #c8e6c9;
     --error-red: #d32f2f;
     --error-bg: #ffcdd2;
@@ -84,9 +84,9 @@ h1:focus {
 }
 
 .appName {
-    color: white; 
+    color: white;
     margin: 10px;
-}    
+}
 
 .container-nav {
     display: flex;
@@ -110,8 +110,10 @@ h1:focus {
 .deleteBtn {
     width: 30%;
     border: none;
+    background-color: #1b5e20;
     background-color: var(--primary-green);
-    color: white;
+    color: #ffffff;
+    font-weight: bold;
     padding: 10px;
     border-radius: 8px;
     font-size: 16px;
@@ -167,8 +169,11 @@ h1:focus {
     border-radius: 50px;
     width: 150px;
     font-size: 18px;
+    background-color: #1b5e20;
+    /* Fallback */
     background-color: var(--primary-green);
-    color: white;
+    color: #ffffff;
+    font-weight: bold;
     border: none;
     margin-bottom: 20px;
     height: 40px;
@@ -280,6 +285,27 @@ h1:focus {
     padding: 5px 10px;
     font-size: 0.8rem;
     margin-left: 0;
+}
+
+.searchBar {
+    width: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.searchBtn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #1b5e20;
+    /* Fallback */
+    background-color: var(--primary-green);
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 /* -------------------- Login Page and Checkout Page -------------------- */

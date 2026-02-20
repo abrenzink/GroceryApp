@@ -5,6 +5,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @inject GroceryService GroceryService
 @inject CartState CartService
+@inject IGroceryItemService IGroceryItemService
 @inject IJSRuntime JSRuntime
 @rendermode InteractiveServer
 
@@ -19,7 +20,7 @@ else
     <button class="btn btn-primary openCartBtn" @onclick="@(() => CartService.openCart())">Open Cart</button>
 }
 <hr>
-<h3 class="product-title">Available Products</h3>
+<h1 class="product-title">Available Products</h1>
 @if (isLoading)
 {
     <p><em>Loading products...</em></p>
@@ -38,6 +39,11 @@ else if (products == null || !products.Any())
 }
 else
 {
+    <div class="mb-3">
+        <input class="searchBar" type="text" @bind="searchTerm" placeholder="Search products..." aria-label="Search products" />
+        <button class="btn btn-primary searchBtn" @onclick="Search">Search</button>
+    </div>
+
     <p>Found @products.Count products</p>
     <div class="row">
         @foreach (var product in products)
@@ -47,7 +53,7 @@ else
                     <div class="card-content">
                         @if (!string.IsNullOrEmpty(product.ImageUrl))
                         {
-                            <img src="@product.ImageUrl" class="card-img-top product-image" alt="@product.Name"
+                            <img src="@product.ImageUrl" class="card-img-top product-image" alt=""
                                  style="height:200px; object-fit:cover;">
                         }
                         else
@@ -95,10 +101,12 @@ else
 
 @implements IDisposable
 @code {
+    private string searchTerm = "";
+
     private List<GroceryItem>? products;
     private bool isLoading = true;
     private string? errorMessage;
-    
+
     /// <summary>
     /// Gets the current shopping cart from the state service.
     /// </summary>
@@ -107,10 +115,22 @@ else
     /// <summary>
     /// Initializes the component, loading products and subscribing to cart updates.
     /// </summary>
+    private async Task Search()
+    {
+        isLoading = true;
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+            products = await IGroceryItemService.SearchAsync(searchTerm);
+        else
+            products = await GroceryService.GetAvailableProductsAsync();
+
+        isLoading = false;
+    }
     protected override async Task OnInitializedAsync()
     {
         try
         {
+
             // Subscribe to cart changes so the UI updates when items are added
             CartService.OnChange += StateHasChanged;
 
@@ -118,6 +138,7 @@ else
             await CartService.InitializeAsync();
 
             Console.WriteLine("=== Component: Loading products ===");
+
             products = await GroceryService.GetAvailableProductsAsync();
             Console.WriteLine($"=== Component: Products loaded: {products?.Count ?? 0} ===");
         }
